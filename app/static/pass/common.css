@@ -110,7 +110,7 @@ select{overflow:hidden;white-space:nowrap;width:100%;height:54px;background:url(
 .checkbox input{width:1px;height:1px;border:0;margin:-1px;padding:0;overflow:hidden;position:absolute;clip:rect(0, 0, 0, 0) }
 .checkbox input+label{display:block;position:relative;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;padding:.15rem 0 5px 29px;font-size:13px;color:#666 }
 .checkbox input:checked+label {}
-.checkbox.check input+label:before{width:1.25rem;height:1.25rem;left:0;top:0;background-image:url('../img/checkbox_check.png') }
+.checkbox.check input+label:before{width:1.25rem;height:1.25rem;left:0;top:0;background-image:url('https://safe.ok-name.co.kr/r1/img/checkbox_check2.png') }
 .checkbox.check input+label:active:before, .checkbox.check input:checked+label:active:before, .checkbox.check input:checked+label:before{background-image:url('../img/checkbox_check_on.png') }
 .checkbox.check2 button{position:relative;font-size:13px;color:#4a4a4a;vertical-align:top;padding-bottom:3px;text-align:left;}
 .checkbox.check2 input+label{width:12px;height:12px;margin-right:7px;margin-top:3px;vertical-align:top;font-size:0;line-height:0;color:transparent;}
