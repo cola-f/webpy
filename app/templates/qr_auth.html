@@ -8,12 +8,12 @@
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="format-detection" content="telephone=no">
-<link href="./static/pass/common.css" media="screen" rel="stylesheet">
-<link href="./static/pass/site.css" media="screen" rel="stylesheet">
-<script src="./static/pass/jquery-1.11.3.min.js"></script>
-<script src="./static/pass/common.js"></script>
-<script src="./static/pass/design.js"></script>
-<script src="./static/pass/vanillaAjax.js"></script>
+<link href="./static/css/common.css" media="screen" rel="stylesheet">
+<link href="./static/css/site.css" media="screen" rel="stylesheet">
+<script src="./static/js/jquery-1.11.3.min.js"></script>
+<script src="./static/js/common.js"></script>
+<script src="./static/js/design.js"></script>
+<script src="./static/js/vanillaAjax.js"></script>
 
 <script type="text/javascript">
 	var authFormInputFocus = false;
@@ -196,7 +196,7 @@
     <div id="wrap" style="padding-bottom: 123px;">
         <header id="header">
             <h1>
-                <a href="https://safe.ok-name.co.kr/CommonSvl#;"><img src="./static/pass/logo_pass.png" alt="PASS"></a>
+                <a href="https://safe.ok-name.co.kr/CommonSvl#;"><img src="./static/img/logo_pass.png" alt="PASS"></a>
             </h1>
 
             <ul class="gnb_wrap col-2">
@@ -210,8 +210,8 @@
 
 
             <div class="qrCodeWrap">
-                <a href="https://safe.ok-name.co.kr/CommonSvl#" id="qr_auth" class="qrCodeLink btn_popup" title="QR코드로 인증하기">
-                    <img src="./static/pass/icon_qrCode.png" alt=""><!-- 2023-01-05 접근성 수정 -->
+                <a href="http://127.0.0.1:5000" id="qr_auth" class="qrCodeLink btn_popup" title="QR코드로 인증하기">
+                    <img src="./static/img/banner/icon_qrCode.png" alt=""><!-- 2023-01-05 접근성 수정 -->
                     <p>QR코드로 인증하기</p>
                 </a>
             </div>
@@ -254,17 +254,17 @@
 									<div class="num_area">
 										
 
-  <link type="text/css" rel="stylesheet" href="./static/pass/botdetectcaptcha">
+  <link type="text/css" rel="stylesheet" href="./static/botdetectcaptcha/layout-stylesheet">
   <div class="BDC_CaptchaDiv" id="botDetectCaptcha_CaptchaDiv" style="width: 190px !important; height: 55px !important; "><!--
  --><div class="BDC_CaptchaImageDiv" id="botDetectCaptcha_CaptchaImageDiv" style="width: 160px !important; height: 55px !important;"><!--
-   --><img class="BDC_CaptchaImage" id="botDetectCaptcha_CaptchaImage" src="./static/pass/botdetectcaptcha(1)" alt="보안문자"><!--
+   --><img class="BDC_CaptchaImage" id="botDetectCaptcha_CaptchaImage" src="./static/botdetectcaptcha/reload-disabled-icon.gif" alt="보안문자"><!--
  --></div><!--
  --><div class="BDC_CaptchaIconsDiv" id="botDetectCaptcha_CaptchaIconsDiv" style="width: 24px !important;"><!--
-   --><a class="BDC_ReloadLink" id="botDetectCaptcha_ReloadLink" href="https://safe.ok-name.co.kr/CommonSvl#" title="새로고침" style="display: inline-block !important;"><img class="BDC_ReloadIcon" id="botDetectCaptcha_ReloadIcon" src="./static/pass/botdetectcaptcha(2)" alt="새로고침"></a><!--
-   --><a rel="nofollow" class="BDC_SoundLink" id="botDetectCaptcha_SoundLink" href="https://safe.ok-name.co.kr/botdetectcaptcha?get=sound&amp;c=botDetectCaptcha&amp;t=de9a0b2963b74ca6b9ce632980de6b44" title="음성듣기"><img class="BDC_SoundIcon" id="botDetectCaptcha_SoundIcon" src="./static/pass/botdetectcaptcha(3)" alt="음성듣기"></a><!--
+   --><a class="BDC_ReloadLink" id="botDetectCaptcha_ReloadLink" href="https://safe.ok-name.co.kr/CommonSvl#" title="새로고침" style="display: inline-block !important;"><img class="BDC_ReloadIcon" id="botDetectCaptcha_ReloadIcon" src="./static/botdetectcaptcha/reload-icon.gif" alt="새로고침"></a><!--
+   --><a rel="nofollow" class="BDC_SoundLink" id="botDetectCaptcha_SoundLink" href="https://safe.ok-name.co.kr/botdetectcaptcha?get=sound&amp;c=botDetectCaptcha&amp;t=de9a0b2963b74ca6b9ce632980de6b44" title="음성듣기"><img class="BDC_SoundIcon" id="botDetectCaptcha_SoundIcon" src="./static/botdetectcaptcha/sound-icon.gif" alt="음성듣기"></a><!--
    --><div class="BDC_Placeholder" id="botDetectCaptcha_AudioPlaceholder">&nbsp;</div><!-- --></div>
-   <script src="./static/pass/botdetectcaptcha(4)" type="text/javascript"></script>
-   <script src="./static/pass/botdetectcaptcha(5)" type="text/javascript"></script>
+   <script src="./static/botdetectcaptcha/script-include" type="text/javascript"></script>
+   <script src="./static/botdetectcaptcha/init-script-include" type="text/javascript"></script>
    <input type="hidden" id="BDC_VCID_botDetectCaptcha" name="BDC_VCID_botDetectCaptcha" value="de9a0b2963b74ca6b9ce632980de6b44">
    <input type="hidden" id="BDC_BackWorkaround_botDetectCaptcha" name="BDC_BackWorkaround_botDetectCaptcha" value="1">
   </div>
@@ -319,7 +319,7 @@
 			title : "새창열림"
 		});
 		$(".footerBanner img").attr({
-			src : "/r1/img/banner/lgu_pass_banner_pc_20221128.png",
+			src : "./static/img/banner/lgu_pass_banner_pc_20221128.png",
 			alt : "PASS 앱 이용하고 TV, 시네빔 선물 받으세요",
 			onerror : "this.style.display='none'"
 		});
@@ -406,7 +406,7 @@
 
 		<div class="footerBanner">
 			<a href="https://cutt.ly/G1z5Mr4" title="새창열림">
-				<img src="./static/pass/lgu_pass_banner_pc_20221128.png" alt="PASS 앱 이용하고 TV, 시네빔 선물 받으세요" onerror="this.style.display=&#39;none&#39;">
+				<img src="./static/img/banner/lgu_pass_banner_pc_20221128.png" alt="PASS 앱 이용하고 TV, 시네빔 선물 받으세요" onerror="this.style.display=&#39;none&#39;">
 			</a>
 		</div>
 
@@ -419,7 +419,7 @@
         <div id="footer">
             <div class="copyright">
                 <div class="certifyBox">
-                    <img src="./static/pass/certify_mark.png" alt="한국 웹접근성 인증평가원 SOFTWARE ACCESSIBILITY 마크(소프트웨어 접근성 품질인증 마크)" title="한국 웹접근성 인증평가원 : KIWAC">
+                    <img src="./static/img/certify_mark.png" alt="한국 웹접근성 인증평가원 SOFTWARE ACCESSIBILITY 마크(소프트웨어 접근성 품질인증 마크)" title="한국 웹접근성 인증평가원 : KIWAC">
                 </div>
                 <div class="copyrightInner">
                     <!-- 이용약관 -->
@@ -433,7 +433,7 @@
                     VeriSign 256-bit SSL 암호화 적용
                 </div>
                 <div class="footer_logo">
-                    <img src="./static/pass/copyright_small.png" alt="KCB">
+                    <img src="./static/img/copyright_small.png" alt="KCB">
                 </div>
             </div>
         </div>

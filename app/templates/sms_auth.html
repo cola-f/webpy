@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<title>휴대폰 안심본인인증 - PASS - LGU+ - 문자인증</title>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Language" content="ko-KR">
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
+<link href="./static/css/common.css?z=12" media="screen" rel="stylesheet">
+<link href="./static/css/site.css?z=12" media="screen" rel="stylesheet">
+<script src="./static/js/jquery-1.11.3.min.js"></script>
+<script src="./static/js/common.js"></script>
+<script src="./static/js/design.js"></script>
+<script src="./static/js/vanillaAjax.js"></script>
+
+<script type="text/javascript">
+	var authFormInputFocus = false;
+	// 페이지 설정
+	document.oncontextmenu = function() {
+		return false;
+	}
+	document.ondragstart = function() {
+		return false;
+	}
+	document.onkeydown = function() {
+		var eventref = (typeof evt !== "undefined") ? evt : event;
+		if (typeof eventref == "undefined") return false;
+		var keyCode = eventref.keyCode;
+
+		if (keyCode == "8"){
+			//input창에 focus가 없는 경우 backspace키를 막는다
+			if(!authFormInputFocus){
+				keyCode = 0;
+				//event.returnValue = false; 위의 event.keyCode=0셋팅으로도 event 무효화됨
+				alert("뒤로가기 버튼은 사용할 수 없습니다");
+				return false;
+			}
+		}
+		else if (keyCode == 116) {	// F5
+			keyCode = 0;
+			return false;
+		}
+		else if (eventref.ctrlKey == true && (keyCode == 78 || keyCode == 82)) { // Ctrl+N, Ctrl+R
+			keyCode = 0;
+			return false;
+		}
+	}
+</script>
+
+
+
+
+
+
+
+
+	<script type="text/javascript">
+	<!--
+	var __KCB_DISABLE_NX_KEY_INSTALL = 'null';
+	//-->
+	</script>
+
+	<script type="text/javascript" src="./static/pass/kcbkbd2.js"></script>
+
+
+
+<script type="text/javascript">
+    var processFlag	= true;
+
+    $(document).ready(function() {
+        // 초기화
+        $("#mbphn_no").bind("keyup", function() {
+            if ($.trim($(this).val()) == "") {
+                $(".btn_skip").removeClass("on");
+            } else {
+                $(".btn_skip").addClass("on");
+            }
+        });
+
+        // 초기화
+        $('body').on('click', '.gnb_wrap li a', function() {
+            if ($.trim($(this).val()) == "") {
+                $(".btn_skip").removeClass("on");
+            } else {
+                $(".btn_skip").addClass("on");
+            }
+        });
+
+        // 인증요청
+        $('body').on('click', '#btnSubmit', function() {
+
+            if (CannotUseMessage()) {
+                self.close();
+                return;
+            }
+
+            if (processFlag === false) {
+                return;
+            }
+
+            // 이름
+            if ($("#nm").val() == null || $("#nm").val() == "") {
+                alert("이름을 입력해 주세요.");
+                $("#nm").focus();
+                return false;
+            }
+
+            // 성명정보 체크
+            if (checkRegExp($("#nm").val(), 'NAME') === false) {
+                alert("올바른 성명정보를 입력해주세요.");
+                $("#nm").focus();
+                return false;
+            }
+
+			// 생년월일
+			if ($("#ssn6").val() == null || $("#ssn6").val() == "") {
+				alert("생년월일을 입력해 주세요.");
+				$("#ssn6").focus();
+				return false;
+			}
+
+			// 생년월일 체크
+			if (checkRegExp($("#ssn6").val(), 'MYNUM1') === false) {
+				alert("올바른 생년월일을 입력해주세요.");
+				$("#ssn6").focus();
+				return false;
+			}
+
+			// 성별
+			if ($("#ssn1").val() == null || $("#ssn1").val() == "") {
+				alert("성별을 입력해 주세요.");
+				$("#ssn1").focus();
+				return false;
+			}
+
+			// 성별 체크
+			if (checkRegExp($("#ssn1").val(), 'MYNUM2') === false) {
+				alert("올바른 성별을 입력해주세요.");
+				$("#ssn1").focus();
+				return false;
+			}
+
+            // 휴대폰 번호
+            if ($("#mbphn_no").val() == null || $("#mbphn_no").val() == "") {
+                alert("휴대폰 번호를 입력 해주세요.");
+                $("#mbphn_no").focus();
+                return false;
+            }
+
+            // 휴대폰 번호    체크
+            if (checkRegExp($("#mbphn_no").val(), 'mbphn_no') === false) {
+                alert("올바른 휴대폰번호를 입력해주세요.");
+                $("#mbphn_no").focus();
+                return false;
+            }
+
+
+            // 보안 문자
+            if ($("#captchaCode").val() == null || $("#captchaCode").val() == "") {
+                alert("보안 문자를 입력해 주세요.");
+                $("#captchaCode").focus();
+                return false;
+            }
+            //fnCaptchaCheck();
+
+
+            var f = document.authForm;
+            f.tc.value = "kcb.oknm.online.pass.popup.sms.cmd.mno.PS03_SmsMno021Cmd";
+            f.target = "_self";
+
+            processFlag = false;
+
+            if(doKcbMakeEncData(f)){
+                f.submit();
+            }
+            else {
+                processFlag = true;
+            }
+
+        });
+
+        // 인증취소
+        $('body').on('click', '#btnCancel', function() {
+            var f = document.authForm;
+
+            if (processFlag) {
+                if (!confirm("본인확인을 취소하시겠습니까?")) return;
+
+                f.tc.value = "kcb.oknm.online.main.popup.cmd.P005_CancelCmd";
+                f.submit();
+            } else {
+                alert("통신업체 확인 요청중입니다.\n\n잠시만 기다려주십시요.");
+            }
+        });
+    });
+
+
+function changeHsCnfrm() {
+	var f = document.authForm;
+	f.tc.value	= "kcb.oknm.online.pass.popup.push.cmd.mno.PS02_PushMno011Cmd";
+	f.target	= "_self";
+	f.submit();
+}
+
+function CannotUseMessage (){
+    var mnoNosendMsg = "";
+
+    if(mnoNosendMsg.length == 0) return false;
+
+    alert(mnoNosendMsg);
+    return true;
+}
+
+</script>
+
+
+</head>
+<body>
+<!-- layerPop : s -->
+    <div id="wrap" style="padding-bottom: 123px;">
+        <header id="header">
+            <h1>
+                <a href="#"><img src="./static/img/logo_pass.png" alt="PASS"></a>
+            </h1>
+
+            <ul class="gnb_wrap col-2">
+                <li><a href="#" id="qr_auth" title="선택하기" onclick="changeHsCnfrm()">PASS로 인증하기</a></li>
+                <li class="on">문자(SMS)로 인증</li>
+            </ul>
+
+        </header>
+
+        <section id="ct" class="certify_user2 certifyWrap certifyWrap_02">
+        	<form name="authForm" id="authForm" method="post" action="/CommonSvl" autocomplete="off" onsubmit="return false;">
+				<input type="hidden" name="tc">
+				<input type="hidden" name="mbl_tel_cmm_cd" value="03">
+				<input type="hidden" name="target_id" value="">
+				<input type="hidden" name="rqst_data" value="Gb5nGoCVxfzXIz11KVzM6DXYkjpYKXgBrU6mg4t8QFGD1d7vEVHqvqzmCt5vpZNXX4TEDTKEkRu/c3amT5fwZQDN8DeV9TgYFtA0WLbxmoCf/IBsO/vswtRhk7oKTgwMkyEXXwGT/1XMLB6OssKufA==">
+				<div class="">
+					<fieldset>
+						<legend>휴대폰 본인확인 입력</legend>
+						<ul class="frm_type">
+							<li class="name">
+								<h3><label for="nm">이름</label></h3>
+								<div class="input input_del">
+									<input type="text" autocomplete="name" name="nm" id="nm" placeholder="성명입력" onblur="authFormInputFocus=false;" onfocus="authFormInputFocus=true">
+								</div>
+							</li>
+							<li class="mynum">
+								<h3>주민등록번호 7자리(생년월일/성별)</h3><!-- 2022-02-15 수정 : 웹접근성 -->
+								<ul class="ui_cols">
+									<li>
+										<span class="input input_mynum">
+											<input type="text" name="ssn6" id="ssn6" maxlength="6" title="주민등록번호 앞 6자리" onblur="authFormInputFocus=false;" onfocus="authFormInputFocus=true">
+											<span class="mark firsChild" id="ssn6_mark"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+										</span>
+									</li>
+									<li><i></i></li>
+									<li>
+										<span class="input input_mynum last">
+											<input type="text" name="ssn1" id="ssn1" maxlength="1" title="주민등록번호 뒤 첫번째자리" onblur="authFormInputFocus=false;" onfocus="authFormInputFocus=true"><!-- 2022-01-05 수정 : 웹접근성 -->
+											<span class="mark firstChild" id="ssn1_mark"><i></i></span>
+										</span>
+										<span class="mynum_after"><code class="blind">마스킹 처리된 주민등록번호 뒤 6자리</code><i></i><i></i><i></i><i></i><i></i><i></i></span><!-- 2023-01-05 접근성 수정 -->
+									</li>
+								</ul>
+							</li>
+							<li>
+								<h3><label for="mbphn_no">휴대폰번호</label></h3>
+								<div class="input input_del">
+									<input type="text" name="mbphn_no" id="mbphn_no" placeholder="숫자만 입력" title="숫자만 입력" maxlength="11" onblur="authFormInputFocus=false;" onfocus="authFormInputFocus=true">
+								</div>
+							</li>
+
+							<!-- 캡차 영역 -->
+
+
+
+
+
+
+
+
+
+
+							<li>
+								<h3><label for="captchaCode">보안문자</label></h3>
+								<div class="input input_del secur_wrap">
+									<div class="num_area">
+
+
+  <link type="text/css" rel="stylesheet" href="./static/botdetectcaptcha/layout-stylesheet">
+  <div class="BDC_CaptchaDiv" id="botDetectCaptcha_CaptchaDiv" style="width: 190px !important; height: 55px !important; "><!--
+ --><div class="BDC_CaptchaImageDiv" id="botDetectCaptcha_CaptchaImageDiv" style="width: 160px !important; height: 55px !important;"><!--
+   --><img class="BDC_CaptchaImage" id="botDetectCaptcha_CaptchaImage" src="./static/botdetectcaptcha/reload-disabled-icon.gif" alt="보안문자"><!--
+ --></div><!--
+ --><div class="BDC_CaptchaIconsDiv" id="botDetectCaptcha_CaptchaIconsDiv" style="width: 24px !important;"><!--
+   --><a class="BDC_ReloadLink" id="botDetectCaptcha_ReloadLink" href="#" title="새로고침" style="display: inline-block !important;"><img class="BDC_ReloadIcon" id="botDetectCaptcha_ReloadIcon" src="./static/botdetectcaptcha/reload-icon.gif" alt="새로고침"></a><!--
+   --><a rel="nofollow" class="BDC_SoundLink" id="botDetectCaptcha_SoundLink" href="/botdetectcaptcha?get=sound&amp;c=botDetectCaptcha&amp;t=b5634f5edd784896ae2ab928b94cd5c0" title="음성듣기"><img class="BDC_SoundIcon" id="botDetectCaptcha_SoundIcon" src="./static/botdetectcaptcha/sound-icon.gif" alt="음성듣기"></a><!--
+   --><div class="BDC_Placeholder" id="botDetectCaptcha_AudioPlaceholder">&nbsp;</div><!-- --></div>
+   <script src="./static/botdetectcaptcha/script-include" type="text/javascript"></script>
+   <script src="./static/botdetectcaptcha/init-script-include" type="text/javascript"></script>
+   <input type="hidden" id="BDC_VCID_botDetectCaptcha" name="BDC_VCID_botDetectCaptcha" value="b5634f5edd784896ae2ab928b94cd5c0">
+   <input type="hidden" id="BDC_BackWorkaround_botDetectCaptcha" name="BDC_BackWorkaround_botDetectCaptcha" value="1">
+  </div>
+
+									</div>
+									<div class="ipt_area">
+										<div class="input input_del">
+											<input type="text" autocomplete="secur" name="captchaCode" id="captchaCode" placeholder="보안문자 입력" title="보안문자 입력" maxlength="6" onblur="authFormInputFocus=false;" onfocus="authFormInputFocus=true" dispname="보안문자" notnull="" data-enc="on" style="text-transform: uppercase;">
+										</div>
+									</div>
+								</div>
+							</li>
+							<!-- //캡차 영역 -->
+
+							<!--
+							<li class="myInfoSaveSelect">
+								<span class="checkbox check2">
+									<input type="checkbox" name="" id="myInfoSave">
+									<label for="myInfoSave">인증정보(이름/생년월일/휴대폰번호)기억하기</label>
+									<label for="myInfoSave">인증정보(이름/생년월일/휴대폰번호)기억하기</label>
+								</span>
+							</li>
+							 -->
+						</ul>
+					</fieldset>
+					<div class="certi_btn_area">
+						<ul class="btn_area2 bt2">
+							<li><button type="button" id="btnCancel" class="btn_r btn_type6">취소</button></li>
+							<li><button type="button" id="btnSubmit" class="btn_r btn_type btn_type3">확인</button></li>
+						</ul>
+					</div>
+				</div>
+			</form>
+            <div class="passCertiInfo">
+                <ul>
+                    <li>
+                        <p>
+                            PASS앱 설치 및 가입 후 이용이 가능합니다. <br>
+                            앱마켓(구글 플레이스토어 / 애플 앱스토어) 에서
+                            <span class="highlighter"><strong>“PASS”</strong> 검색!</span>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+		<!-- 하단 배너 -->
+
+
+
+
+
+
+<script type="text/javascript">
+	var mblTelCmmCd = "03";
+	var type = "SMS";
+	var step = "1";
+
+	$(document).ready(function() {
+		$(".footerBanner a").attr({
+			href : "https://cutt.ly/G1z5Mr4",
+			title : "새창열림"
+		});
+		$(".footerBanner img").attr({
+			src : "./static/img/banner/lgu_pass_banner_pc_20221128.png",
+			alt : "PASS 앱 이용하고 TV, 시네빔 선물 받으세요",
+			onerror : "this.style.display='none'"
+		});
+
+		// 배너 클릭시 이벤트
+		$('.footerBanner').on('click', 'a', function(e) {
+			e.preventDefault();
+
+			// 0:통신사선택, 1:개인정보입력
+			if(step != "1") return;
+
+			if(type == "SMS"){
+				if(mblTelCmmCd == "01") {
+					// 새창 열림
+					var url = $(this).prop('href');
+					window.open(url, "_blank");
+				}
+				else if(mblTelCmmCd == "02") {
+					// 새창 열림
+					var url = $(this).prop('href');
+					window.open(url, "_blank");
+				}
+				else if(mblTelCmmCd == "03") {
+					// PUSH로 전환
+					//changeHsCnfrm(); // 부모페이지에 있는 함수 호출
+					// 새창 열림
+					var url = $(this).prop('href');
+					window.open(url, "_blank");
+				}
+				else if(mblTelCmmCd == "04") {
+					// 새창 열림
+					var url = $(this).prop('href');
+					window.open(url, "_blank");
+				}
+				else if(mblTelCmmCd == "05") {
+					// 새창 열림
+					var url = $(this).prop('href');
+					window.open(url, "_blank");
+				}
+				else if(mblTelCmmCd == "06") {
+					// 새창 열림
+					var url = $(this).prop('href');
+					window.open(url, "_blank");
+				}
+			}
+			else{
+				if(mblTelCmmCd == "01") {
+					// 새창 열림
+					var url = $(this).prop('href');
+					window.open(url, "_blank");
+				}
+				else if(mblTelCmmCd == "02") {
+					// 새창 열림
+					var url = $(this).prop('href');
+					window.open(url, "_blank");
+				}
+				else if(mblTelCmmCd == "03") {
+					// 새창 열림
+					var url = $(this).prop('href');
+					window.open(url, "_blank");
+				}
+				else if(mblTelCmmCd == "04") {
+					// 새창 열림
+					var url = $(this).prop('href');
+					window.open(url, "_blank");
+				}
+				else if(mblTelCmmCd == "05") {
+					// 새창 열림
+					var url = $(this).prop('href');
+					window.open(url, "_blank");
+				}
+				else if(mblTelCmmCd == "06") {
+					// 새창 열림
+					var url = $(this).prop('href');
+					window.open(url, "_blank");
+				}
+			}
+		});
+	});
+
+</script>
+
+
+
+		<div class="footerBanner">
+			<a href="https://cutt.ly/G1z5Mr4" title="새창열림">
+				<img src="./static/img/banner/lgu_pass_banner_pc_20221128.png" alt="PASS 앱 이용하고 TV, 시네빔 선물 받으세요" onerror="this.style.display='none'">
+			</a>
+		</div>
+
+		<!-- // 하단 배너 -->
+
+
+
+		<!-- 푸터 영역 -->
+
+
+
+        <div id="footer">
+            <div class="copyright">
+                <div class="certifyBox">
+                    <img src="./static/img/certify_mark.png" alt="한국 웹접근성 인증평가원 SOFTWARE ACCESSIBILITY 마크(소프트웨어 접근성 품질인증 마크)" title="한국 웹접근성 인증평가원 : KIWAC">
+                </div>
+                <div class="copyrightInner">
+                    <!-- 이용약관 -->
+                    <a href="#" class="footerAgreePop" id="footerAgree01" data-cd="006020003" title="이용약관 레이어 팝업 열기"><span>이용약관</span></a>
+
+                    <!-- 개인정보취급방침 -->
+                    <a href="#" class="footerAgreePop" id="footerAgree02" data-cd="006070003" title="개인정보처리방침 레이어 팝업 열기"><span class="bold">개인정보처리방침</span></a>
+
+                    <br>
+
+                    VeriSign 256-bit SSL 암호화 적용
+                </div>
+                <div class="footer_logo">
+                    <img src="./static/img/copyright_small.png" alt="KCB">
+                </div>
+            </div>
+        </div>
+
+        <!-- 약관 레이어-->
+        <div class="layerPopupWrap" id="layerAgreePopFooter">
+            <div class="dim"></div>
+            <div class="layer-pop agreementFooter">
+
+            </div>
+        </div>
+        <!-- // 약관 레이어-->
+
+		<!-- // 푸터 영역 -->
+
+    </div>
+<!-- layerPop : e -->
+
+
+
+
+
+
+
+
+
+</body></html>

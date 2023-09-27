@@ -7,6 +7,12 @@ def index():
     if request.method =='GET':
         return render_template('index.html')
     elif request.method == 'POST':
-        return render_template('authentication.html')
+        print(request.form['tc'])
+        if request.form['tc'] == 'kcb.oknm.online.pass.popup.sms.cmd.mno.PS02_SmsMno011Cmd':
+            return render_template('sms_auth.html')
+        elif request.form['tc'] == 'kcb.oknm.online.pass.popup.push.cmd.mno.PS02_PushMno011Cmd':
+            return render_template('qr_auth.html')
+        else:
+            return render_template('qr_auth.html')
     else:
         return "Hello world"
