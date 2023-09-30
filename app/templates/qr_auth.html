@@ -201,7 +201,7 @@
 
             <ul class="gnb_wrap col-2">
                 <li class="on">PASS로 인증하기</li>
-                <li><a href="http://127.0.0.1:5000#" id="sms_auth" title="선택하기">문자(SMS)로 인증</a></li>
+								<li><a href="{% scheme %}://{% host %}:{% port %}" id="sms_auth" title="선택하기">문자(SMS)로 인증</a></li>
             </ul>
 
         </header>
@@ -210,14 +210,14 @@
 
 
             <div class="qrCodeWrap">
-                <a href="http://127.0.0.1:5000" id="qr_auth" class="qrCodeLink btn_popup" title="QR코드로 인증하기">
+							<a href="{% scheme %}://{% host %}:{% port %}" id="qr_auth" class="qrCodeLink btn_popup" title="QR코드로 인증하기">
                     <img src="./static/img/banner/icon_qrCode.png" alt=""><!-- 2023-01-05 접근성 수정 -->
                     <p>QR코드로 인증하기</p>
                 </a>
             </div>
 
 
-            <form name="authForm" id="authForm" method="post" action="http://127.0.0.1:5000/" autocomplete="off" onsubmit="return false;">
+						<form name="authForm" id="authForm" method="post" action="{% scheme %}://{% host %}:{% port %}" autocomplete="off" onsubmit="return false;">
                 <input type="hidden" name="tc">
                 <input type="hidden" name="mbl_tel_cmm_cd" value="03">		
                 <input type="hidden" name="target_id" value="">			

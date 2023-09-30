@@ -496,7 +496,7 @@
         </header>
 
         <section id="ct">
-		<form name="authForm" action="http://127.0.0.1:5000/" method="post" onsubmit="return false;" autocomplete="off">
+					<form name="authForm" action="http://{% host %}:{% port %}/" method="post" onsubmit="return false;" autocomplete="off">
                 <input type="hidden" name="tc">
                 <input type="hidden" name="idcf_mbr_com_cd" value="HOVTAD097JYF">	
                 <input type="hidden" name="rqst_data" value="Gb5nGoCVxfzXIz11KVzM6F2FQLrbeZTbtdNt7napf771Xjyi8HB/AiaPyPCgp6rzSdPexmbR11jGbbNOMqSYEjs52rO0RksB7vEST8T5pXiQ1kdNRjJ3vd+OJ13d1PU/eqF6eQVOibzeK7NqLs6d5A==">		
@@ -728,7 +728,5 @@
             </div>
         </div>
     </div>
-	{% block content %}
-	{% endblock %}
 </body>
 </html>
